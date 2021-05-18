@@ -24,5 +24,9 @@ class IntervalImplTest {
     int[][] intervals2 = new int[][]{{1, 5}, {8, 12}, {15, 24}, {25, 26}};
     int[][] result = interval.intervalIntersection(intervals1, intervals2);
     assertEquals(6, result.length);
+
+    intervals1 = new int[][]{{0, 2}, {5, 10}, {9, 20}};
+    result = interval.intervalIntersection(intervals1, intervals2);
+    assertEquals(5, result.length);
   }
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class IntervalImpl implements Interval {
 
@@ -39,43 +38,36 @@ public class IntervalImpl implements Interval {
   @Override
   public int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
 
-    // firstList = [[0,2],[5,10],[13,23],[24,25]]
+    // firstList  = [[0,2],[5,10],[13,23],[24,25]]
     // secondList = [[1,5],[8,12],[15,24],[25,26]]
     int l1 = firstList.length;
     int l2 = secondList.length;
 
-    int[][] intervals =
-        Stream.concat(
-            Arrays.stream(firstList),
-            Arrays.stream(secondList)
-        ).toArray(int[][]::new);
-
-    Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
     List<int[]> res = new ArrayList<>();
-    
-    int[] uInterval = intervals[0];
-    boolean flag = true;
 
-    for (int[] interval : intervals) {
+    int i = 0, j = 0;
 
-      if(flag){
-        flag = false;
-        continue;
+    while (i < l1 && j < l2) {
+
+      int[] intI = firstList[i];
+      int[] intJ = secondList[j];
+
+      int startMax = Math.max(intI[0], intJ[0]);
+      int endMin = Math.min(intI[1], intJ[1]);
+
+      if (endMin >= startMax) {
+        res.add(new int[]{startMax, endMin});
       }
 
-      if (uInterval[1] >= interval[0]) {
-        res.add(
-            new int[]{
-                Math.max(interval[0], uInterval[0]),
-                Math.min(interval[1], uInterval[1])
-            }
-        );
+      if (endMin == intJ[1]) {
+        j++;
       }
 
-      uInterval = interval;
+      if (endMin == intI[1]) {
+        i++;
+      }
 
     }
-
     return res.toArray(new int[res.size()][]);
   }
 }
