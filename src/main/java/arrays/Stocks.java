@@ -1,11 +1,5 @@
 package main.java.arrays;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Stocks {
 
   public int maxProfit(int[] prices) {
@@ -43,26 +37,20 @@ public class Stocks {
   //not working yet
   public int maxProfitWithKTransactions(int[] prices, int k) {
 
-    int minPrice = Integer.MAX_VALUE;
-    int result = 0;
-    int localMax = 0;
-    List<Integer> localMaxList = new ArrayList<>();
+    int n = prices.length;
+    int[][] dp = new int[k+1][n];
 
-    for (int i = 1; i < prices.length; i++) {
-      minPrice = Math.min(prices[i - 1], minPrice);
-
-      if (prices[i] > prices[i - 1]) {
-        localMax = localMax + (prices[i] - prices[i - 1]);
-      } else {
-        minPrice = prices[i];
-        localMaxList.add(localMax);
-        localMax = 0;
+    for (int i = 1; i < k+1; i++) {
+      for (int j = 1; j < n; j++) {
+        int curMax = 0;
+        for (int m = 0; m < j; m++) {
+          curMax = Math.max(curMax, prices[j] - prices[m] + dp[i - 1][m]);
+        }
+        dp[i][j] = Math.max(curMax, dp[i][j - 1]);
       }
     }
 
-    localMaxList.sort(Collections.reverseOrder());
-
-    return localMaxList.get(0) + localMaxList.get(1);
+    return dp[k][n-1];
   }
 
 }
