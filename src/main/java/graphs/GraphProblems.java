@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class GraphProblems implements IGraph {
 
+  double minVal = Integer.MAX_VALUE;
+
   @Override
   public Double evaluateDivision(
       List<List<String>> equations, List<Double> values, List<String> query
@@ -16,7 +18,8 @@ public class GraphProblems implements IGraph {
     String src = query.get(0);
     String des = query.get(1);
     Set<String> visited = new HashSet<>();
-    return getCalculatedValue(graph.getEdges(), src, des, visited);
+    getCalculatedValue(graph.getEdges(), src, des, visited);
+    return minVal;
   }
 
   private Double getCalculatedValue(
@@ -37,7 +40,7 @@ public class GraphProblems implements IGraph {
       if (!visited.contains(neighbor.getKey())) {
         double val = getCalculatedValue(graph, neighbor.getKey(), des, visited);
         if (val != -1) {
-          return val * neighbor.getValue();
+          minVal = Math.min(val * neighbor.getValue(), minVal);
         }
       }
     }
