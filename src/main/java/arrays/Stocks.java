@@ -38,19 +38,17 @@ public class Stocks {
   public int maxProfitWithKTransactions(int[] prices, int k) {
 
     int n = prices.length;
-    int[][] dp = new int[k+1][n];
+    int[][] dp = new int[k + 1][n];
 
-    for (int i = 1; i < k+1; i++) {
+    for (int i = 1; i < k + 1; i++) {
+      int maxDiff = dp[i - 1][0] - prices[0];
       for (int j = 1; j < n; j++) {
-        int curMax = 0;
-        for (int m = 0; m < j; m++) {
-          curMax = Math.max(curMax, prices[j] - prices[m] + dp[i - 1][m]);
-        }
-        dp[i][j] = Math.max(curMax, dp[i][j - 1]);
+        maxDiff = Math.max(maxDiff, dp[i - 1][j - 1] - prices[j - 1]);
+        dp[i][j] = Math.max(prices[j] - maxDiff, dp[i][j - 1]);
       }
     }
 
-    return dp[k][n-1];
+    return dp[k][n - 1];
   }
 
 }
