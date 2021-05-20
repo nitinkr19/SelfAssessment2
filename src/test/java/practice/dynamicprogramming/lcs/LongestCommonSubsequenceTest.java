@@ -94,4 +94,10 @@ class LongestCommonSubsequenceTest {
     s2 = "ABCDBA";
     assertEquals(1, lcs.minInsertionToMakePalindrome(s2.toLowerCase()));
   }
+
+  @Test
+  void lengthOfLongestIncreasingSubsequence() {
+    int[] arr = new int[]{10, 22, 9, 33, 21, 50, 41, 60, 80};
+    assertEquals(6, lcs.lengthOfLongestIncreasingSubsequence(arr));
+  }
 }

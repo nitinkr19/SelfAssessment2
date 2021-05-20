@@ -1,5 +1,7 @@
 package main.java.practice.dynamicprogramming.lcs;
 
+import java.util.Arrays;
+
 public class LongestCommonSubsequence implements LCS {
 
   @Override
@@ -76,6 +78,34 @@ public class LongestCommonSubsequence implements LCS {
           max = dp[i][j];
         }
       }
+    }
+
+    return max;
+  }
+
+  /*
+    {10, 22, 9, 33, 21, 50, 41, 60, 80}
+    10 -> 22 -> 33 -> 50 -> 60 -> 80
+    6
+   */
+  @Override
+  public int lengthOfLongestIncreasingSubsequence(int[] arr) {
+
+    int n = arr.length;
+    int[] dp = new int[n];
+    Arrays.fill(dp, 1);
+
+    for (int i = 1; i < n; i++) {
+      for (int j = 0; j < i; j++) {
+        if (arr[i] > arr[j]) {
+          dp[i] = Math.max(dp[i], dp[j] + 1);
+        }
+      }
+    }
+
+    int max = 0;
+    for (int i = 0; i < n; i++) {
+      max = Math.max(max, dp[i]);
     }
 
     return max;
