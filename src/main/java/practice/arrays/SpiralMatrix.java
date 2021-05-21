@@ -2,7 +2,7 @@ package main.java.practice.arrays;
 
 public class SpiralMatrix {
 
-  public static void main(String[] args) {
+  public void displayMatrix(String[] args) {
     int n = 8;
     int[][] matrix = generateSpiralMatrix(n);
     for (int r = 0; r < n; r++) {

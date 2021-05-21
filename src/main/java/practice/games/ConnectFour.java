@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class MyFirstGame {
+public class ConnectFour {
 
   public static final char BLANK_CHAR = '.';
   private static final char[] PLAYERS = {'R', 'B'};
@@ -13,7 +13,7 @@ public class MyFirstGame {
   private int lastCol = -1;
   private int lastRow = -1;
 
-  public MyFirstGame(int h, int w) {
+  public ConnectFour(int h, int w) {
     this.height = h;
     this.width = w;
     this.grid = new char[h][w];
