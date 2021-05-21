@@ -62,4 +62,66 @@ class IslandProblemsTest {
         };
     assertEquals(3, island.countUniqueIslands(sea));
   }
+
+  @Test
+  void captureRegions() {
+
+    char[][] region = new char[][]
+        {
+            {'X', 'X', 'X', 'X'},
+            {'X', 'O', 'O', 'X'},
+            {'X', 'X', 'O', 'X'},
+            {'X', 'O', 'X', 'X'}
+        };
+    System.out.println(island.gridToString(region));
+    char[][] regionFinal = island.captureRegions(region);
+    System.out.println(island.gridToString(regionFinal));
+
+  }
+
+  @Test
+  void captureRegions12() {
+
+    char[][] region = new char[][]
+        {
+            {'O', 'O', 'O'},
+            {'O', 'O', 'O'},
+            {'O', 'O', 'O'}
+        };
+    System.out.println(island.gridToString(region));
+    char[][] regionFinal = island.captureRegions(region);
+    System.out.println(island.gridToString(regionFinal));
+
+  }
+
+  @Test
+  void captureRegions2() {
+
+    char[][] region = new char[][]
+        {
+            {'X', 'X', 'X', 'X'},
+            {'X', 'O', 'O', 'X'},
+            {'X', 'X', 'O', 'X'},
+            {'X', 'O', 'X', 'X'}
+        };
+    System.out.println(island.gridToString(region));
+    char[][] regionFinal = island.captureRegions2(region);
+    System.out.println(island.gridToString(regionFinal));
+
+  }
+
+  @Test
+  void captureRegions22() {
+
+    char[][] region = new char[][]
+        {
+            {'O', 'O', 'O'},
+            {'O', 'O', 'O'},
+            {'O', 'O', 'O'}
+        };
+    System.out.println(island.gridToString(region));
+    char[][] regionFinal = island.captureRegions2(region);
+    System.out.println(island.gridToString(regionFinal));
+
+  }
 }

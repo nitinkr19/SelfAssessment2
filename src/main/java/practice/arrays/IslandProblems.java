@@ -1,10 +1,24 @@
 package main.java.practice.arrays;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javafx.util.Pair;
 
 public class IslandProblems {
+
+  public String gridToString(char[][] grid) {
+    return
+        IntStream.range(1, grid[0].length + 1)
+            .mapToObj(Integer::toString)
+            .collect(Collectors.joining())
+            + "\n" +
+            Arrays.stream(grid)
+                .map(String::new)
+                .collect(Collectors.joining("\n"));
+  }
 
   //1 - land
   //0 - sea
@@ -82,6 +96,107 @@ public class IslandProblems {
       findIslands(sea, i + 1, j, m, n, curRow, curCol, currentIsland);
     }
 
+  }
+
+  public char[][] captureRegions(char[][] region) {
+
+    int m = region.length;
+    int n = region[0].length;
+
+    boolean[][] visited = new boolean[m][n];
+    char[][] regionCopy;
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+
+        if (region[i][j] == 'O') {
+          Set<Pair<Integer, Integer>> currentRegion = new HashSet<>();
+          regionCopy = Arrays.stream(region).map(char[]::clone).toArray(char[][]::new);
+          findRegions(region, i, j, m, n, visited, currentRegion, regionCopy);
+          if (!currentRegion.isEmpty()) {
+            region = regionCopy;
+          }
+        }
+
+      }
+    }
+    return region;
+  }
+
+  private void findRegions(
+      char[][] region,
+      int i, int j,
+      int m, int n,
+      boolean[][] visited,
+      Set<Pair<Integer, Integer>> currentRegion,
+      char[][] regionCopy
+  ) {
+
+    if (valid(i, j, m, n) && !visited[i][j] && region[i][j] == 'O') {
+      visited[i][j] = true;
+      currentRegion.add(new Pair<>(i, j));
+      regionCopy[i][j] = 'X';
+      findRegions(region, i - 1, j, m, n, visited, currentRegion, regionCopy);
+      findRegions(region, i, j - 1, m, n, visited, currentRegion, regionCopy);
+      findRegions(region, i, j + 1, m, n, visited, currentRegion, regionCopy);
+      findRegions(region, i + 1, j, m, n, visited, currentRegion, regionCopy);
+      if (boundary(i, j, m, n)) {
+        currentRegion.clear();
+      }
+    }
+
+  }
+
+  private boolean isBoundaryInclusive = false;
+  public char[][] captureRegions2(char[][] region) {
+
+    int m = region.length;
+    int n = region[0].length;
+
+    boolean[][] visited = new boolean[m][n];
+    char[][] regionCopy;
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+
+        if (region[i][j] == 'O') {
+          isBoundaryInclusive = false;
+          regionCopy = Arrays.stream(region).map(char[]::clone).toArray(char[][]::new);
+          findRegions(region, i, j, m, n, visited, regionCopy);
+          if (!isBoundaryInclusive) {
+            region = regionCopy;
+          }
+        }
+
+      }
+    }
+    return region;
+  }
+
+  private void findRegions(
+      char[][] region,
+      int i, int j,
+      int m, int n,
+      boolean[][] visited,
+      char[][] regionCopy
+  ) {
+
+    if (valid(i, j, m, n) && !visited[i][j] && !isBoundaryInclusive && region[i][j] == 'O') {
+      visited[i][j] = true;
+      regionCopy[i][j] = 'X';
+      findRegions(region, i - 1, j, m, n, visited, regionCopy);
+      findRegions(region, i, j - 1, m, n, visited, regionCopy);
+      findRegions(region, i, j + 1, m, n, visited, regionCopy);
+      findRegions(region, i + 1, j, m, n, visited, regionCopy);
+      if (boundary(i, j, m, n)) {
+        isBoundaryInclusive = true;
+      }
+    }
+
+  }
+
+  private boolean boundary(int i, int j, int m, int n) {
+    return i == 0 || j == 0 || i == m - 1 || j == n - 1;
   }
 
 }
