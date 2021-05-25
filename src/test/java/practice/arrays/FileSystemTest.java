@@ -31,6 +31,42 @@ class FileSystemTest {
     assertEquals(4, list.size());
   }
 
+  @Test
+  void ls() {
+    setUpFileSystem();
+    String path = "/Personal/Movies/English/";
+    List<String> files = fileSystem.ls(path);
+    System.out.println(files);
+    assertEquals(2, files.size());
+  }
+
+  @Test
+  void addContent() {
+
+    setUpFileSystem();
+
+    String filePath = "/Personal/Movies/English/Horror/Conjuring1/part1.mov";
+    String content = "Part 1 starts!";
+//    fileSystem.addContent(filePath, content);
+    assertEquals(content, fileSystem.getContent(filePath));
+  }
+
+  @Test
+  void getContent() {
+  }
+
+  @Test
+  void mkDir() {
+  }
+
+  @Test
+  void tree() {
+    setUpFileSystem();
+    String path = "/Personal/Movies/English";
+    List<String> list = fileSystem.tree(path);
+    assertEquals(9, list.size());
+  }
+
   private void setUpFileSystem() {
     String path1 = "/Personal/Movies/English/Horror/Conjuring1";
     String path2 = "/Personal/Movies/English/Horror/Conjuring2";
@@ -45,28 +81,9 @@ class FileSystemTest {
     fileSystem.mkDir(path4);
     fileSystem.mkDir(path5);
     fileSystem.mkDir(path6);
-  }
-
-  @Test
-  void ls() {
-  }
-
-  @Test
-  void addContent() {
-
-    setUpFileSystem();
 
     String filePath = "/Personal/Movies/English/Horror/Conjuring1/part1.mov";
     String content = "Part 1 starts!";
     fileSystem.addContent(filePath, content);
-    assertEquals(content, fileSystem.getContent(filePath));
-  }
-
-  @Test
-  void getContent() {
-  }
-
-  @Test
-  void mkDir() {
   }
 }

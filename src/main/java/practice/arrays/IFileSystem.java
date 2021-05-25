@@ -12,4 +12,5 @@ public interface IFileSystem {
 
   void mkDir(String path);
 
+  List<String> tree(String path);
 }

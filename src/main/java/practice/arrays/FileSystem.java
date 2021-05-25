@@ -1,14 +1,17 @@
 package main.java.practice.arrays;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileSystem implements IFileSystem {
 
   public static final String ROOT_DIR_PATH = "/";
   public static final String FILE_SEPARATOR = "/";
   Dir root;
+  private List<String> listOfFiles = new ArrayList<>();
 
   public FileSystem() {
     root = new Dir();
@@ -37,6 +40,7 @@ public class FileSystem implements IFileSystem {
     }
     list.addAll(new ArrayList<>(t.dirs.keySet()));
     list.addAll(new ArrayList<>(t.files.keySet()));
+    Collections.sort(list);
     return list;
   }
 
@@ -81,7 +85,49 @@ public class FileSystem implements IFileSystem {
 
   }
 
+  @Override
+  public List<String> tree(String path) {
+
+    Dir t = root;
+
+    if (!path.equals(ROOT_DIR_PATH)) {
+
+      String[] d = path.split(FILE_SEPARATOR);
+      for (int i = 1; i < d.length - 1; i++) {
+        t = t.dirs.get(d[i]);
+      }
+
+      if (t.dirs.containsKey(d[d.length - 1])) {
+        t = t.dirs.get(d[d.length - 1]);
+      } else {
+        listOfFiles.add(d[d.length - 1]);
+        return listOfFiles;
+      }
+
+    }
+    findAllInTree(t, path);
+    return listOfFiles;
+  }
+
+  private void findAllInTree(Dir dir, String currentPath) {
+
+    if (dir.dirs.keySet().size() == 0 && dir.files.keySet().size() == 0) {
+      return;
+    }
+
+    for (Map.Entry<String, Dir> entry : dir.dirs.entrySet()) {
+      findAllInTree(entry.getValue(), currentPath + "/" + entry.getKey());
+      listOfFiles.add(currentPath + "/" + entry.getKey());
+      if (entry.getValue().files != null) {
+        for (Map.Entry<String, String> files : entry.getValue().files.entrySet()) {
+          listOfFiles.add(currentPath + "/" + entry.getKey() + "/" + files.getKey());
+        }
+      }
+    }
+  }
+
   static class Dir {
+
     HashMap<String, Dir> dirs = new HashMap<>();
     HashMap<String, String> files = new HashMap<>();
   }
