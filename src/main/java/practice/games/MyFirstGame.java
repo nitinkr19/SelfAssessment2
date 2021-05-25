@@ -8,6 +8,8 @@ public class MyFirstGame {
 
   public static final char BLANK_CHAR = '.';
   private static final char[] PLAYERS = {'R', 'B'};
+  private static final int WINNING_COUNT = 4;
+
   private final int height, width;
   private final char[][] grid;
   private int lastCol = -1;
@@ -41,13 +43,16 @@ public class MyFirstGame {
 
     char player = grid[lastRow][lastCol];
 
-    String plays = String.format("%c%c%c%c", player, player, player, player);
+    StringBuilder plays = new StringBuilder();
+    for (int i = 0; i < WINNING_COUNT; i++) {
+      plays.append(player);
+    }
 
     return
-        contains(horizontal(), plays)
-            || contains(vertical(), plays)
-            || contains(diagonal(), plays)
-            || contains(revDiagonal(), plays);
+        contains(horizontal(), plays.toString())
+            || contains(vertical(), plays.toString())
+            || contains(diagonal(), plays.toString())
+            || contains(revDiagonal(), plays.toString());
 
   }
 
@@ -62,14 +67,22 @@ public class MyFirstGame {
     }
     return s.toString();
   }
+  /*
+     0 1 2 3 4
+   0
+   1 . R
+   2
+   3
+
+   */
 
   private String diagonal() {
     StringBuilder s = new StringBuilder();
-    for (int i = 0; i < height; i++) {
-      int w = lastCol + lastRow - height;
+    for (int h = 0; h < height; h++) {
+      int w = lastCol + lastRow - h;
 
       if (w >= 0 && w < width) {
-        s.append(grid[i][w]);
+        s.append(grid[h][w]);
       }
     }
     return s.toString();
@@ -77,11 +90,11 @@ public class MyFirstGame {
 
   private String revDiagonal() {
     StringBuilder s = new StringBuilder();
-    for (int i = 0; i < height; i++) {
-      int w = lastCol - lastRow + height;
+    for (int h = 0; h < height; h++) {
+      int w = lastCol - lastRow + h;
 
       if (w >= 0 && w < width) {
-        s.append(grid[i][w]);
+        s.append(grid[h][w]);
       }
     }
     return s.toString();
@@ -98,10 +111,10 @@ public class MyFirstGame {
       return;
     }
 
-    for (int i = height - 1; i >= 0; i--) {
-      if (grid[i][playTurn] == BLANK_CHAR) {
-        grid[i][playTurn] = PLAYERS[player];
-        lastRow = i;
+    for (int h = height - 1; h >= 0; h--) {
+      if (grid[h][playTurn] == BLANK_CHAR) {
+        grid[h][playTurn] = PLAYERS[player];
+        lastRow = h;
         lastCol = playTurn;
         return;
       }
@@ -120,7 +133,7 @@ public class MyFirstGame {
     int turn = 0;
     for (int player = 0; moves-- >= 0; player = 1 - player) {
 
-      if(turn < playTurns.length) {
+      if (turn < playTurns.length) {
         playTurn(player, playTurns[turn++]);
         System.out.println(this);
 
