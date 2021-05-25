@@ -29,4 +29,12 @@ class StocksTest {
     prices = new int[]{7, 1, 5, 3, 6, 7};
     assertEquals(8, stocks.maxProfitWithKTransactions(prices, 2));
   }
+
+  @Test
+  void maxProfitWithKTransactionsV0() {
+    prices = new int[]{3, 3, 5, 0, 0, 3, 1, 4};
+    assertEquals(6, stocks.maxProfitWithKTransactionsV0(prices, 2));
+    prices = new int[]{7, 1, 5, 3, 6, 7};
+    assertEquals(8, stocks.maxProfitWithKTransactionsV0(prices, 2));
+  }
 }

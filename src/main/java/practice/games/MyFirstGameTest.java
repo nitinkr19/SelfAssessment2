@@ -2,7 +2,7 @@ package main.java.practice.games;
 
 import org.junit.jupiter.api.Test;
 
-class ConnectFourTest {
+class MyFirstGameTest {
 
   @Test
   void testToString() {
@@ -13,9 +13,9 @@ class ConnectFourTest {
 
     int h = 6;
     int w = 7;
-    ConnectFour connectFour = new ConnectFour(h, w);
+    MyFirstGame myFirstGame = new MyFirstGame(h, w);
 
     int[] plays = new int[]{0,1,2,3,4,5,3,4,5,6,5,6,3,4,4,5,3,5,3,5,3,5,3};
-    connectFour.run(plays);
+    myFirstGame.run(plays);
   }
 }
