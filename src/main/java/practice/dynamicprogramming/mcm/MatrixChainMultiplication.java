@@ -1,6 +1,9 @@
 package main.java.practice.dynamicprogramming.mcm;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 public class MatrixChainMultiplication implements MCM {
 
@@ -32,6 +35,21 @@ public class MatrixChainMultiplication implements MCM {
     populateDPDefaultValues(n, -1);
 
     return minPartitionsWithValidPalindrome(s, 0, n - 1);
+  }
+
+  @Override
+  public int minCostToConnectSticks(int[] sticks) {
+    PriorityQueue<Integer> pq = new PriorityQueue<>();
+    for (int s : sticks) {
+      pq.offer(s);
+    }
+    int sum = 0;
+    while (pq.size() > 1) {
+      int two = pq.poll() + pq.poll();
+      sum += two;
+      pq.offer(two);
+    }
+    return sum;
   }
 
   private int minPartitionsWithValidPalindrome(String s, int i, int j) {
