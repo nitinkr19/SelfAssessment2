@@ -36,7 +36,31 @@ public class LeetCodeMedium {
 
   */
   public boolean isRobotBounded(String instructions) {
-    return false;
+
+    int[][] directions = new int[][]{
+        {0, 1},
+        {1, 0},
+        {0, -1},
+        {-1, 0}
+    };
+
+    int x = 0, y = 0;
+    int ind = 0;//north
+    for (int i = 0; i < instructions.length(); i++) {
+      char c = instructions.charAt(i);
+
+      if (c == 'L') {
+        ind = (ind + 3) % 4;
+      } else if (c == 'R') {
+        ind = (ind + 1) % 4;
+      } else {
+
+        x = directions[ind][0];
+        y = directions[ind][1];
+
+      }
+    }
+    return (x == 0 && y == 0) || ind != 0;
   }
 
 }
