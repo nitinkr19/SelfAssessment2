@@ -14,5 +14,6 @@ class LeetCodeMediumTest {
     assertEquals(true, leetCodeMedium.isRobotBounded("GGLLGG"));
     assertEquals(false, leetCodeMedium.isRobotBounded("GG"));
     assertEquals(true, leetCodeMedium.isRobotBounded("GL"));
+    assertEquals(true, leetCodeMedium.isRobotBounded("GLRLLGLL"));
   }
 }

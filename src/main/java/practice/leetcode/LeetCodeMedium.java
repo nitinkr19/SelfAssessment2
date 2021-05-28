@@ -55,8 +55,8 @@ public class LeetCodeMedium {
         ind = (ind + 1) % 4;
       } else {
 
-        x = directions[ind][0];
-        y = directions[ind][1];
+        x += directions[ind][0];
+        y += directions[ind][1];
 
       }
     }
