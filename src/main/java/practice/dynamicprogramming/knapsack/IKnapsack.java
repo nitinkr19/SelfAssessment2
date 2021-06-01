@@ -22,4 +22,11 @@ public interface IKnapsack {
 
   long findAll(List<Integer> priceOfJeans, List<Integer> priceOfShoes, List<Integer> priceOfSkirts, List<Integer> priceOfTops, int dollars);
 
+  long findAllWays(
+      List<Integer> priceOfJeans,
+      List<Integer> priceOfShoes,
+      List<Integer> priceOfSkirts,
+      List<Integer> priceOfTops,
+      int dollars
+  );
 }

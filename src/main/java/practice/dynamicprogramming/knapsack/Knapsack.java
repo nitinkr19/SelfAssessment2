@@ -203,6 +203,41 @@ public class Knapsack implements IKnapsack {
     return count;
   }
 
+  @Override
+  public long findAllWays(
+      List<Integer> priceOfJeans,
+      List<Integer> priceOfShoes,
+      List<Integer> priceOfSkirts,
+      List<Integer> priceOfTops,
+      int dollars
+  ) {
+    int count = 0;
+
+    List<Integer> prices1 = new ArrayList<>();
+    for (Integer priceOfJean : priceOfJeans) {
+      for (Integer priceOfShoe : priceOfShoes) {
+        prices1.add(priceOfJean + priceOfShoe);
+      }
+    }
+
+    List<Integer> prices2 = new ArrayList<>();
+    for (Integer priceOfSkirt : priceOfSkirts) {
+      for (Integer priceOfTop : priceOfTops) {
+        prices2.add(priceOfSkirt + priceOfTop);
+      }
+    }
+
+    for (Integer p1 : prices1) {
+      for (Integer p2 : prices2) {
+        if(p1 + p2 <= dollars){
+          count++;
+        }
+      }
+    }
+
+    return count;
+  }
+
   private void findMaxPossibleWays(
       List<List<Integer>> allPrices,
       int item,

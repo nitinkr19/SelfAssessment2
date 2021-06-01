@@ -94,4 +94,17 @@ class KnapsackTest {
     assertEquals(4, val);
 
   }
+
+  @Test
+  void findAllWays() {
+    long val = knapsack.findAllWays(
+        Arrays.asList(2, 3),
+        Arrays.asList(4),
+        Arrays.asList(2, 3),
+        Arrays.asList(1, 2),
+        10
+    );
+    System.out.println(val);
+    assertEquals(4, val);
+  }
 }
