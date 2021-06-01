@@ -1,5 +1,9 @@
 package main.java.practice.dynamicprogramming.knapsack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Knapsack implements IKnapsack {
 
   @Override
@@ -170,5 +174,57 @@ public class Knapsack implements IKnapsack {
   public int targetSumWithNegativeAndPositives(int[] arr, int targetSum, int n) {
 
     return countOfSubsetsWithDifference(arr, targetSum, n);
+  }
+
+  static int count = 0;
+  static int[][] dp;
+
+  public long findAll(List<Integer> priceOfJeans, List<Integer> priceOfShoes, List<Integer> priceOfSkirts, List<Integer> priceOfTops, int dollars) {
+
+    dp = new int[4][dollars+1];
+    for(int i = 0 ; i < 4 ; i++){
+      Arrays.fill(dp[i], -1);
+    }
+
+    List<List<Integer>> allPrices = new ArrayList();
+    allPrices.add(priceOfJeans);
+    allPrices.add(priceOfShoes);
+    allPrices.add(priceOfSkirts);
+    allPrices.add(priceOfTops);
+
+    findAllPossibleWays(allPrices, dollars, 0, 0);
+    return count;
+  }
+
+  private void findAllPossibleWays(
+      List<List<Integer>> prices,
+      int totalPrice,
+      int itemIndex,
+      int currSum
+  ) {
+
+    if(currSum > totalPrice) {
+      return;
+    }
+
+    if(itemIndex == prices.size()) {
+      count++;
+      return;
+    }
+
+    if(dp[itemIndex][totalPrice-currSum] != -1){
+      count++;
+      return;
+    }
+
+    for(int priceOfEachOption : prices.get(itemIndex)) {
+      currSum += priceOfEachOption;
+      findAllPossibleWays(prices, totalPrice, itemIndex + 1, currSum);
+      if(totalPrice - currSum >= 0) {
+        dp[itemIndex][totalPrice-currSum] = count;
+      }
+      currSum -= priceOfEachOption;
+    }
+
   }
 }

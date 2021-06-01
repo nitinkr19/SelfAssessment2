@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Arrays;
 import main.java.practice.dynamicprogramming.knapsack.IKnapsack;
 import main.java.practice.dynamicprogramming.knapsack.Knapsack;
 import org.junit.jupiter.api.Test;
@@ -76,5 +77,14 @@ class KnapsackTest {
     sum = 3;
     n = arr.length;
     assertEquals(5, knapsack.countOfSubsetsWithDifference(arr, sum, n));
+  }
+
+  @Test
+  void findAll() {
+
+    long val =
+        knapsack.findAll(Arrays.asList(2,3), Arrays.asList(4), Arrays.asList(2,3), Arrays.asList(1,2), 10);
+    System.out.println(val);
+
   }
 }

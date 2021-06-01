@@ -1,5 +1,7 @@
 package main.java.practice.dynamicprogramming.knapsack;
 
+import java.util.List;
+
 public interface IKnapsack {
 
   int maxProfitRecursive(int[] wt, int[] val, int W, int n);
@@ -17,4 +19,7 @@ public interface IKnapsack {
   int countOfSubsetsWithDifference(int[] arr, int diff, int n);
 
   int targetSumWithNegativeAndPositives(int[] arr, int sum, int n);
+
+  long findAll(List<Integer> priceOfJeans, List<Integer> priceOfShoes, List<Integer> priceOfSkirts, List<Integer> priceOfTops, int dollars);
+
 }
