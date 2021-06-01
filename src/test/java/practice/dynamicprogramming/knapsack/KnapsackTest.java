@@ -73,6 +73,7 @@ class KnapsackTest {
     arr = new int[]{1, 1, 2, 3};
     n = arr.length;
     assertEquals(3, knapsack.targetSumWithNegativeAndPositives(arr, sum, n));
+
     arr = new int[]{1, 1, 1, 1, 1};
     sum = 3;
     n = arr.length;
@@ -82,9 +83,15 @@ class KnapsackTest {
   @Test
   void findAll() {
 
-    long val =
-        knapsack.findAll(Arrays.asList(2,3), Arrays.asList(4), Arrays.asList(2,3), Arrays.asList(1,2), 10);
+    long val = knapsack.findAll(
+        Arrays.asList(2, 3),
+        Arrays.asList(4),
+        Arrays.asList(2, 3),
+        Arrays.asList(1, 2),
+        10
+    );
     System.out.println(val);
+    assertEquals(4, val);
 
   }
 }

@@ -16,12 +16,10 @@ public class IslandProblems {
   private boolean isBoundaryInclusive = false;
 
   public static int countGroups(List<String> related) {
-    // Write your code here
 
     int m = related.size();
     int count = 0;
 
-    // Set<Integer> completed = new HashSet<>();
     for (int i = 0; i < m; i++) {
       if (!completed.contains(i)) {
         dfs(related, i);
@@ -29,31 +27,13 @@ public class IslandProblems {
       }
     }
 
-    // char[][] relatedArr = new char[m][m];
-    // for(int i = 0;i < m;i++){
-    //     relatedArr[i] = related.get(i).toCharArray();
-    // }
-
-    // for(int i = 0 ; i < m ; i++){
-    //     for(int j = 0; j < m; j++) {
-
-    //         if(relatedArr[i][j] == '1'){
-    //             calculateGroups(relatedArr, j, 0, m, m);
-    //             continue;
-    //         }
-    //     }
-    //     count++;
-    // }
-
     return count;
   }
 
   private static void dfs(List<String> related, int i) {
 
-    Queue<Integer> q = new LinkedList();
-//    Set<Integer> visited = new HashSet<>();
+    Queue<Integer> q = new LinkedList<>();
     q.add(i);
-//    visited.add(i);
     while (!q.isEmpty()) {
       int curr = q.poll();
       if (completed.contains(curr)) {
@@ -66,10 +46,9 @@ public class IslandProblems {
           }
         }
       }
-//      visited.add(curr);
       completed.add(curr);
     }
-//    completed.addAll(visited);
+
   }
 
   public String gridToString(char[][] grid) {
