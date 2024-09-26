@@ -6,4 +6,5 @@ public interface MCM {
 
   int palindromicPartitioning(String s);
 
+  int minCostToConnectSticks(int[] sticks);
 }

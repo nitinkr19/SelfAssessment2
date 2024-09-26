@@ -41,4 +41,10 @@ class MatrixChainMultiplicationTest {
     assertTrue(mcm1.isPalindromic(s, 1, 3));
     assertFalse(mcm1.isPalindromic(s, 1, 4));
   }
+
+  @Test
+  void minCostToConnectSticks() {
+    assertEquals(14, mcm.minCostToConnectSticks(new int[]{2, 4, 3}));
+    assertEquals(30, mcm.minCostToConnectSticks(new int[]{1, 8, 3, 5}));
+  }
 }

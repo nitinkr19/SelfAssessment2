@@ -2,6 +2,7 @@ package test.java.practice.arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import main.java.practice.arrays.IslandProblems;
 import org.junit.jupiter.api.Test;
 
@@ -123,5 +124,12 @@ class IslandProblemsTest {
     char[][] regionFinal = island.captureRegions2(region);
     System.out.println(island.gridToString(regionFinal));
 
+  }
+
+  @Test
+  void countGroups() {
+
+    int val = IslandProblems.countGroups(Arrays.asList("1100", "1110", "0110", "0001"));
+    System.out.println(val);
   }
 }

@@ -1,5 +1,9 @@
 package main.java.practice.dynamicprogramming.knapsack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Knapsack implements IKnapsack {
 
   @Override
@@ -170,5 +174,132 @@ public class Knapsack implements IKnapsack {
   public int targetSumWithNegativeAndPositives(int[] arr, int targetSum, int n) {
 
     return countOfSubsetsWithDifference(arr, targetSum, n);
+  }
+
+  static int count = 0;
+  static int[][] dp;
+
+  public long findAll(
+      List<Integer> priceOfJeans,
+      List<Integer> priceOfShoes,
+      List<Integer> priceOfSkirts,
+      List<Integer> priceOfTops,
+      int dollars
+  ) {
+
+    dp = new int[4][dollars+1];
+    for(int i = 0 ; i < 4 ; i++){
+      Arrays.fill(dp[i], -1);
+    }
+
+    List<List<Integer>> allPrices = new ArrayList<>();
+    allPrices.add(priceOfJeans);
+    allPrices.add(priceOfShoes);
+    allPrices.add(priceOfSkirts);
+    allPrices.add(priceOfTops);
+
+//    findAllPossibleWays(allPrices, dollars, 0, 0);
+    findMaxPossibleWays(allPrices, 0, dollars);
+    return count;
+  }
+
+  @Override
+  public long findAllWays(
+      List<Integer> priceOfJeans,
+      List<Integer> priceOfShoes,
+      List<Integer> priceOfSkirts,
+      List<Integer> priceOfTops,
+      int dollars
+  ) {
+    int count = 0;
+
+    List<Integer> prices1 = new ArrayList<>();
+    for (Integer priceOfJean : priceOfJeans) {
+      for (Integer priceOfShoe : priceOfShoes) {
+        prices1.add(priceOfJean + priceOfShoe);
+      }
+    }
+
+    List<Integer> prices2 = new ArrayList<>();
+    for (Integer priceOfSkirt : priceOfSkirts) {
+      for (Integer priceOfTop : priceOfTops) {
+        prices2.add(priceOfSkirt + priceOfTop);
+      }
+    }
+
+    for (Integer p1 : prices1) {
+      for (Integer p2 : prices2) {
+        if(p1 + p2 <= dollars){
+          count++;
+        }
+      }
+    }
+
+    return count;
+  }
+
+  private void findMaxPossibleWays(
+      List<List<Integer>> allPrices,
+      int item,
+      int left
+  ) {
+
+
+    if(left < 0) {
+      return;
+    }
+
+    if(left == 0 && item < allPrices.size()){
+      return;
+    }
+
+    if(item == allPrices.size()) {
+      count++;
+      return;
+    }
+
+    for(int price : allPrices.get(item)) {
+
+      if(price <= left) {
+        left = left - price;
+        findMaxPossibleWays(allPrices, item+1, left);
+        left = left + price;
+      }
+    }
+
+  }
+
+  private void findAllPossibleWays(
+      List<List<Integer>> prices,
+      int totalPrice,
+      int itemIndex,
+      int currSum
+  ) {
+
+    if(currSum > totalPrice) {
+      return;
+    }
+
+    if(itemIndex == prices.size()) {
+      count++;
+      return;
+    }
+
+//    System.out.println(itemIndex + " : " + currSum);
+
+//    if(dp[itemIndex][totalPrice-currSum] != -1) {
+//      System.out.println("IN DP " + itemIndex + " : " + currSum);
+//      return;
+//    }
+
+    for(int priceOfEachOption : prices.get(itemIndex)) {
+      currSum += priceOfEachOption;
+      findAllPossibleWays(prices, totalPrice, itemIndex + 1, currSum);
+      if(totalPrice - currSum >= 0) {
+        dp[itemIndex][totalPrice - currSum] = count;
+      }
+      currSum -= priceOfEachOption;
+    }
+
   }
 }

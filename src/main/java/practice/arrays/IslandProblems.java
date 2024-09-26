@@ -2,12 +2,54 @@ package main.java.practice.arrays;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javafx.util.Pair;
 
 public class IslandProblems {
+
+  static Set<Integer> completed = new HashSet<>();
+  private boolean isBoundaryInclusive = false;
+
+  public static int countGroups(List<String> related) {
+
+    int m = related.size();
+    int count = 0;
+
+    for (int i = 0; i < m; i++) {
+      if (!completed.contains(i)) {
+        dfs(related, i);
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  private static void dfs(List<String> related, int i) {
+
+    Queue<Integer> q = new LinkedList<>();
+    q.add(i);
+    while (!q.isEmpty()) {
+      int curr = q.poll();
+      if (completed.contains(curr)) {
+        return;
+      }
+      for (int neighbor = 0; neighbor < related.get(curr).length(); neighbor++) {
+        if (curr != neighbor && related.get(curr).charAt(neighbor) == '1') {
+          if(!completed.contains(neighbor)){
+            q.add(neighbor);
+          }
+        }
+      }
+      completed.add(curr);
+    }
+
+  }
 
   public String gridToString(char[][] grid) {
     return
@@ -147,7 +189,6 @@ public class IslandProblems {
 
   }
 
-  private boolean isBoundaryInclusive = false;
   public char[][] captureRegions2(char[][] region) {
 
     int m = region.length;
